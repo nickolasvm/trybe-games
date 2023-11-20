@@ -142,11 +142,50 @@ public class TrybeGamesController
         Console.WriteLine("Estúdio de jogos com sucesso!");
     }
 
-    // 3. Crie a funcionalidade de adicionar novo Jogo ao Banco de dados
     public void AddGame()
     {
-        // implementar
-        Console.WriteLine("Ainda não é possível realizar essa funcionalidade!");
+        Console.WriteLine("Escreva o nome do novo jogo");
+        string name = Console.ReadLine();
+
+        string dateFormat = "dd/MM/yyyy";
+        Console.WriteLine($"Escreva a data de lançamento do jogo ({dateFormat})");
+        string userDate = Console.ReadLine();
+        DateTime releaseDate = DateTime.ParseExact(userDate, dateFormat, null);
+
+        Console.WriteLine("Selecione o tipo de jogo");
+        PrintGameTypes();
+        int userGameType = int.Parse(Console.ReadLine());
+        GameType gameType;
+        switch (userGameType)
+        {
+            case 0:
+                gameType = GameType.Action;
+                break;
+            case 1:
+                gameType = GameType.Adventure;
+                break;
+            case 2:
+                gameType = GameType.Puzzle;
+                break;
+            case 3:
+                gameType = GameType.Strategy;
+                break;
+            case 4:
+                gameType = GameType.Simulation;
+                break;
+            case 5:
+                gameType = GameType.Sports;
+                break;
+            default:
+                gameType = GameType.Other;
+                break;
+        }
+
+
+        int id = database.Games.Count + 1;
+        database.Games.Add(new Game { Name = name, Id = id, ReleaseDate = releaseDate, GameType = gameType });
+
+        Console.WriteLine("Jogo adicionado com sucesso!");
     }
 
     public void ChangeGameStudio(Game game)
@@ -237,12 +276,12 @@ public class TrybeGamesController
 
     public void PrintGameTypes()
     {
-        Console.WriteLine("1 - Ação");
-        Console.WriteLine("2 - Aventura");
-        Console.WriteLine("3 - Puzzle");
-        Console.WriteLine("4 - Estratégia");
-        Console.WriteLine("5 - Simulação");
-        Console.WriteLine("6 - Esportes");
-        Console.WriteLine("7 - Outro");
+        Console.WriteLine("0 - Ação");
+        Console.WriteLine("1 - Aventura");
+        Console.WriteLine("2 - Puzzle");
+        Console.WriteLine("3 - Estratégia");
+        Console.WriteLine("4 - Simulação");
+        Console.WriteLine("5 - Esportes");
+        Console.WriteLine("6 - Outro");
     }
 }
